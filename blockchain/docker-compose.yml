@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  central-bank:
+    image: hyperledger/besu:latest
+    container_name: ecdf-central-bank
+    command:
+      - --network=qbft
+      - --data-path=/opt/besu/data
+      - --rpc-http-enabled=true
+      - --rpc-http-host=0.0.0.0
+      - --rpc-http-port=8545
+      - --rpc-http-api=ETH,NET,QBFT,PERM,WEB3
+      - --rpc-http-cors-origins=*
+      - --host-allowlist=*
+      - --min-gas-price=0
+    ports:
+      - "8545:8545"
+    networks:
+      ecdf-network:
+        ipv4_address: 172.20.0.10
+
+  bank-a:
+    image: hyperledger/besu:latest
+    container_name: ecdf-bank-a
+    command:
+      - --network=qbft
+      - --data-path=/opt/besu/data
+      - --rpc-http-enabled=true
+      - --rpc-http-host=0.0.0.0
+      - --rpc-http-port=8545
+      - --rpc-http-api=ETH,NET,QBFT,PERM,WEB3
+      - --rpc-http-cors-origins=*
+      - --host-allowlist=*
+      - --min-gas-price=0
+    ports:
+      - "8546:8545"
+    networks:
+      ecdf-network:
+        ipv4_address: 172.20.0.11
+
+  bank-b:
+    image: hyperledger/besu:latest
+    container_name: ecdf-bank-b
+    command:
+      - --network=qbft
+      - --data-path=/opt/besu/data
+      - --rpc-http-enabled=true
+      - --rpc-http-host=0.0.0.0
+      - --rpc-http-port=8545
+      - --rpc-http-api=ETH,NET,QBFT,PERM,WEB3
+      - --rpc-http-cors-origins=*
+      - --host-allowlist=*
+      - --min-gas-price=0
+    ports:
+      - "8547:8545"
+    networks:
+      ecdf-network:
+        ipv4_address: 172.20.0.12
+
+  bank-c:
+    image: hyperledger/besu:latest
+    container_name: ecdf-bank-c
+    command:
+      - --network=qbft
+      - --data-path=/opt/besu/data
+      - --rpc-http-enabled=true
+      - --rpc-http-host=0.0.0.0
+      - --rpc-http-port=8545
+      - --rpc-http-api=ETH,NET,QBFT,PERM,WEB3
+      - --rpc-http-cors-origins=*
+      - --host-allowlist=*
+      - --min-gas-price=0
+    ports:
+      - "8548:8545"
+    networks:
+      ecdf-network:
+        ipv4_address: 172.20.0.13
+
+networks:
+ecdf-network:
+  driver: bridge
+  ipam:
+    config:
+      - subnet: 172.20.0.0/16
