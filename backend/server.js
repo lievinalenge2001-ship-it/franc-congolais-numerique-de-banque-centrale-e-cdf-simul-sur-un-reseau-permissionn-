@@ -3,6 +3,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const { ethers } = require('ethers');
 const centralBankRoutes = require('./src/routes/centralBank.routes');
+const bankRoutes = require('./src/routes/bank.routes');
+const citizenRoutes = require('./src/routes/citizen.routes');
 
 // Chargement des variables d'environnement
 dotenv.config();
@@ -16,6 +18,8 @@ const RPC_URL = process.env.RPC_URL || 'http://127.0.0.1:8545';
 app.use(cors());
 app.use(express.json());
 app.use('/api/central-bank', centralBankRoutes);
+app.use('/api/bank', bankRoutes);
+app.use('/api/citizen', citizenRoutes);
 
 // Connexion au provider Blockchain (Nœud Besu de la Banque Centrale)
 const provider = new ethers.JsonRpcProvider(RPC_URL);
