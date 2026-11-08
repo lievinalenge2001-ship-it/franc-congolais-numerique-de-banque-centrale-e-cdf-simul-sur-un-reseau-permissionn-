@@ -8,10 +8,10 @@ export default {
     extend: {
       colors: {
         brand: {
-          dark: '#0F172A', // Bleu institutionnel très sombre
-          primary: '#2563EB', // Bleu vif banque
-          accent: '#0EA5E9', // Bleu clair moderne
-          success: '#10B981', // Vert validation KYC
+          dark: '#0F172A',
+          primary: '#2563EB',
+          accent: '#0EA5E9',
+          success: '#10B981',
         }
       }
     },
