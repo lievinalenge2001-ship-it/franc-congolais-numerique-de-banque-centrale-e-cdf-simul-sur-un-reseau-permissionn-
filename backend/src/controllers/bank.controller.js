@@ -7,9 +7,13 @@ const updateCitizenKYC = async (req, res) => {
     if (!contractAddress || !citizenAddress || status === undefined) {
       return res.status(400).json({ error: "Tous les champs sont requis (contractAddress, citizenAddress, status)." });
     }
+    
     const txHash = await blockchainService.updateKYC(contractAddress, citizenAddress, status);
     res.json({ message: `KYC mis à jour (${status ? 'Approuvé' : 'Révoqué'}) avec succès ✅`, txHash });
   } catch (error) {
+    // 👇 C'EST CETTE LIGNE QUI VA ENFIN AFFICHER L'ERREUR DANS LE TERMINAL
+    console.error("❌ ERREUR BLOCKCHAIN DÉTAILLÉE :", error);
+    
     res.status(500).json({ error: "Erreur lors de la mise à jour du KYC", details: error.message });
   }
 };
@@ -24,6 +28,7 @@ const getAccountStatus = async (req, res) => {
     const status = await blockchainService.getAccountStatus(contractAddress, userAddress);
     res.json(status);
   } catch (error) {
+    console.error("❌ ERREUR ACCOUNT STATUS :", error);
     res.status(500).json({ error: "Erreur lors de la récupération du statut du compte", details: error.message });
   }
 };

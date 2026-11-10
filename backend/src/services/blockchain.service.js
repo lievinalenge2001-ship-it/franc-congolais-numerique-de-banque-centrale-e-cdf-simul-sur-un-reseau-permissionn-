@@ -19,17 +19,16 @@ const ECDFTokenABI = [
 
 const provider = new ethers.JsonRpcProvider(process.env.RPC_URL || 'http://127.0.0.1:8545');
 
-// Signer administrateur (Banque Centrale)
-const adminWallet = process.env.CENTRAL_BANK_PRIVATE_KEY
-  ? new ethers.Wallet(process.env.CENTRAL_BANK_PRIVATE_KEY, provider)
-  : null;
+// Signer administrateur (Banque Centrale) avec fallback automatique
+const defaultPrivateKey = "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+const privateKeyToUse = process.env.CENTRAL_BANK_PRIVATE_KEY || process.env.PRIVATE_KEY || defaultPrivateKey;
+const adminWallet = new ethers.Wallet(privateKeyToUse, provider);
 
 /**
  * Obtenir une instance du contrat (lecture seule ou écriture)
  */
 const getContract = (contractAddress, withSigner = false) => {
   if (withSigner) {
-    if (!adminWallet) throw new Error("Clé privée Banque Centrale non configurée dans .env");
     return new ethers.Contract(contractAddress, ECDFTokenABI, adminWallet);
   }
   return new ethers.Contract(contractAddress, ECDFTokenABI, provider);
